@@ -1,9 +1,16 @@
-import React from "react"; import { BsTrash } from "react-icons/bs";
+import { todoModel } from "@/pages";
+import React from "react";
+import { BsTrash } from "react-icons/bs";
 
 interface props {
-    todoTittle: string
+    todo: todoModel;
+    toggleComplete: any;
+    deleteDocument: any
 }
-const Task = ({ todoTittle }: props) => {
+
+
+
+const Task = ({ todo, toggleComplete, deleteDocument }: props) => {
     const style = {
         li: `
         flex justify-between
@@ -23,14 +30,19 @@ const Task = ({ todoTittle }: props) => {
         button: `flex justify-end items-center`,
     };
     return (
-        <li className={style.li}>
+        <li className={todo.complete ? style.liComplete : style.li}>
             <div className={style.row}>
-
-                <input type="checkbox" className={style.check} />
-                <p className={style.text}>{todoTittle}</p>
-
+                <input
+                    type="checkbox"
+                    checked={todo.complete ? true : false}
+                    className={style.check}
+                    onChange={() => toggleComplete(todo)}
+                />
+                <p className={todo.complete ? style.textComplete : style.text} onClick={() => toggleComplete(todo)}>
+                    {todo.text}
+                </p>
             </div>
-            <button className={style.button}>
+            <button className={style.button} onClick={() => deleteDocument(todo)}>
                 <BsTrash size={17} />
             </button>
         </li>
